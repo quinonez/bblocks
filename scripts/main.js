@@ -7,7 +7,7 @@ define( ['require', 'd3', 'THREE', 'BBH1' ], function( require, d3, THREE, BBH1 
     .text("Successfully loaded D3 version " + d3.version); 
 
 
-  var histo = new BBH1("nombre", "titulo", 25, 0, 200);
+  var histo = new BBH1("nombre", "titulo", 10, 0, 200);
   histo.Fill(123.4);
   histo.Fill(113.4);
   histo.Fill(129.4);

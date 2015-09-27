@@ -41,6 +41,8 @@ define( [ 'd3', 'THREE' ], function( d3, THREE ){
 
     // First fill array of frequencies for each bin: freqData.
     for( var i = 0; i < this.rawData.length; i++ ){
+      binxlow = this.xmin;
+      binxup = binxlow + binwidth;
       if( this.rawData[ i ] < this.xmin ) this.freqData[ 0 ] += 1; // Underflow.
       if( this.rawData[ i ] >= this.xmax ) this.freqData[ nbinsx + 1 ] += 1; // Overflow.
       // From index 1 til index nbinsx-2 of freqData Array.
@@ -49,11 +51,12 @@ define( [ 'd3', 'THREE' ], function( d3, THREE ){
           this.freqData[ j ] += 1;
           break;
         }
+        // Go to the next bin
+        binxlow = binxup;
+        binxup += binwidth;   
       }
-      // Go to the next bin
-      binxlow = binxup;
-      binxup += binwidth;   
     }
+    console.log(this.freqData);
       // **************************************************************
       // Now start visualization
       // **************************************************************
@@ -94,7 +97,6 @@ define( [ 'd3', 'THREE' ], function( d3, THREE ){
 
       // Displaying data    
       this.freqData.forEach(function(d){
-	console.log(binwidth);
         chart.append( "rect" )
           .attr( "x", function(d){return binwidth;} )
           .attr( "width", binwidth )
