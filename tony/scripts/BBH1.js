@@ -74,7 +74,7 @@ define( [ 'd3', 'THREE' ], function( d3, THREE ){
       var yScale = d3.scale.linear().range( [ height, 0 ] );
       // Defining the plot's domain
       xScale.domain([ this.xmin, this.xmax ]).nice();
-      yScale.domain([ 0, d3.max( this.rawData ) ]).nice();
+      yScale.domain([ 0, d3.max( this.freqData ) ]).nice();
 
       var xAxis = d3.svg.axis()
         .scale( xScale )
@@ -95,13 +95,14 @@ define( [ 'd3', 'THREE' ], function( d3, THREE ){
       // Definining text labels for axis.
       // Don't do it because that need to be accessed by the user
 
-      // Displaying data    
-      this.freqData.forEach(function(d){
-        chart.append( "rect" )
-          .attr( "x", function(d){return binwidth;} )
-          .attr( "width", binwidth )
-          .attr( "y", height/2 )
-          .attr( "height", height )
+      // Displaying data      
+      this.freqData.forEach(function(d,i){
+		        chart.append( "rect" )
+          .attr( "x", function(){return (i-1)*xScale(binwidth);} )
+          .attr( "width", xScale(binwidth)-2)
+          .attr( "y", yScale(d) )
+          .attr( "height", function(){return height-yScale(d);}  )
+		        .attr("fill", "green");
       });
     } // Ends function Draw
   };
