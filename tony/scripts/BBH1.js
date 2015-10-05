@@ -70,8 +70,8 @@ define( [ 'd3', 'THREE' ], function( d3, THREE ){
       var chart = svg.append( "g" )
         .attr( "transform", "translate(" + margin.left + "," + margin.top + ")" );
       // Scaling the data
-      var xScale = d3.scale.linear().range( [ 0, width ] );
-      var yScale = d3.scale.linear().range( [ height, 0 ] );
+      var xScale = d3.scale.linear().domain([ this.xmin, this.xmax ]).range( [ 0, width ] ).nice();
+      var yScale = d3.scale.linear().domain([ 0, d3.max( this.freqData ) ]).range( [ height, 0 ] ).nice();
       // Defining the plot's domain
       xScale.domain([ this.xmin, this.xmax ]).nice();
       yScale.domain([ 0, d3.max( this.freqData ) ]).nice();
@@ -88,7 +88,7 @@ define( [ 'd3', 'THREE' ], function( d3, THREE ){
         .attr( "transform", "translate(0," + height + ")" );
 
       var yAxisGroup = chart.append( "g" )
-        .attr( "transform", "translate(0," + height + ")" );
+        .attr( "transform", "translate(0,0)" );
 
       xAxis( xAxisGroup );
       yAxis( yAxisGroup );
